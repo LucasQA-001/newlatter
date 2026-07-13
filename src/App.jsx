@@ -79,6 +79,14 @@ export default function App() {
   const [hasUnread, setHasUnread] = useState(true);
   const [selectedArticleId, setSelectedArticleId] = useState(null);
   const [htmlInput, setHtmlInput] = useState(DEFAULT_HTML_MESSAGE);
+  const [formData, setFormData] = useState({
+    tag: "NOVA FUNCIONALIDADE",
+    title: "Cartão certo, na hora certa: vincule cartões por Atividade",
+    summary: "Chega de procurar qual cartão usar. Veja como configurar em 3 passos.",
+    date: formatDate(new Date()),
+    coverImage: "",
+    coverName: "",
+  });
   const [customArticles, setCustomArticles] = useState([]);
   const detailRef = useRef(null);
 
@@ -116,17 +124,20 @@ export default function App() {
       return;
     }
 
-    const title = extractHtmlTitle(htmlBody) || "Mensagem criada por HTML";
+    const title = formData.title.trim() || extractHtmlTitle(htmlBody) || "Mensagem criada por HTML";
     const article = {
       id: `html-${Date.now()}`,
-      tag: "HTML",
+      tag: formData.tag,
+      tagTone: formData.tag === "NOVA FUNCIONALIDADE" ? "gold" : "",
       title,
       listTitle: title,
-      summary: extractPlainText(htmlBody) || "Conteúdo personalizado inserido por HTML.",
-      date: formatDate(new Date()),
+      summary: formData.summary.trim() || extractPlainText(htmlBody) || "Conteúdo personalizado inserido por HTML.",
+      date: formData.date.trim() || formatDate(new Date()),
+      hero: formData.coverImage,
+      coverName: formData.coverName,
       htmlBody,
       unread: true,
-      thumb: "news",
+      thumb: formData.coverImage ? "image" : "news",
       heroKind: "newspaper",
     };
 
@@ -136,7 +147,32 @@ export default function App() {
     setPanelOpen(true);
   }
 
-  function handleImageUpload(event) {
+  function updateFormField(field, value) {
+    setFormData((currentForm) => ({ ...currentForm, [field]: value }));
+  }
+
+  function handleCoverImageUpload(event) {
+    const file = event.target.files?.[0];
+
+    if (!file || !file.type.startsWith("image/")) {
+      return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      setFormData((currentForm) => ({
+        ...currentForm,
+        coverImage: reader.result,
+        coverName: file.name,
+      }));
+      event.target.value = "";
+    };
+
+    reader.readAsDataURL(file);
+  }
+
+  function handleInlineImageUpload(event) {
     const file = event.target.files?.[0];
 
     if (!file || !file.type.startsWith("image/")) {
@@ -218,10 +254,43 @@ export default function App() {
         <section className="html-editor" aria-label="Editor HTML da mensagem">
           <div className="html-editor-input">
             <div className="section-title">
-              <h2>Mensagem por HTML</h2>
-              <span>Preview do conteúdo antes de publicar no mural</span>
+              <h2>Insert do mural</h2>
+              <span>Preencha como o card e a mensagem devem aparecer</span>
             </div>
+            <div className="editor-grid">
+              <label>
+                Tag
+                <select value={formData.tag} onChange={(event) => updateFormField("tag", event.target.value)}>
+                  <option>NOVA FUNCIONALIDADE</option>
+                  <option>NOVIDADE</option>
+                  <option>COMUNICADO</option>
+                  <option>MELHORIA</option>
+                </select>
+              </label>
+              <label>
+                Data
+                <input value={formData.date} onChange={(event) => updateFormField("date", event.target.value)} />
+              </label>
+            </div>
+            <label className="field-block">
+              Título da mensagem
+              <input value={formData.title} onChange={(event) => updateFormField("title", event.target.value)} />
+            </label>
+            <label className="field-block">
+              Resumo do card
+              <textarea
+                className="summary-input"
+                value={formData.summary}
+                onChange={(event) => updateFormField("summary", event.target.value)}
+              />
+            </label>
+            <label className="cover-upload">
+              <span>Imagem de capa</span>
+              <strong>{formData.coverName || "Selecionar imagem da máquina"}</strong>
+              <input type="file" accept="image/*" onChange={handleCoverImageUpload} />
+            </label>
             <textarea
+              className="html-input"
               value={htmlInput}
               onChange={(event) => setHtmlInput(event.target.value)}
               spellCheck="false"
@@ -229,8 +298,8 @@ export default function App() {
             />
             <div className="editor-actions">
               <label className="image-action">
-                Adicionar imagem
-                <input type="file" accept="image/*" onChange={handleImageUpload} />
+                Imagem no corpo
+                <input type="file" accept="image/*" onChange={handleInlineImageUpload} />
               </label>
               <button type="button" className="primary-action" onClick={addHtmlArticle}>
                 Adicionar ao mural
@@ -246,7 +315,21 @@ export default function App() {
               <MuralNewspaper variant="panel" />
               <span>Prévia</span>
             </div>
-            <div className="html-message" dangerouslySetInnerHTML={{ __html: htmlPreview }} />
+            <div className="insert-preview">
+              <div className="insert-card-preview">
+                <span className="thumb image-preview-thumb">
+                  {formData.coverImage ? <img src={formData.coverImage} alt="" /> : <MuralNewspaper variant="card" />}
+                </span>
+                <span className="card-body">
+                  <span className={`card-tag ${formData.tag === "NOVA FUNCIONALIDADE" ? "gold" : ""}`}>{formData.tag}</span>
+                  <strong>{formData.title || "Título da mensagem"}</strong>
+                  <span>{formData.summary || "Resumo do card"}</span>
+                  <small>{formData.date}</small>
+                </span>
+              </div>
+              {formData.coverImage && <img className="insert-hero-preview" src={formData.coverImage} alt="" />}
+              <div className="html-message" dangerouslySetInnerHTML={{ __html: htmlPreview }} />
+            </div>
           </div>
         </section>
       </main>
@@ -304,8 +387,10 @@ export default function App() {
 function NewsCard({ article, onSelect }) {
   return (
     <button className="news-card" type="button" onClick={onSelect}>
-      <span className={`thumb ${article.thumb === "news" ? "newspaper-thumb" : ""}`}>
-        {article.thumb === "card" ? <CreditCardIcon /> : <MuralNewspaper variant="card" />}
+      <span className={`thumb ${article.thumb === "news" ? "newspaper-thumb" : ""} ${article.thumb === "image" ? "image-thumb" : ""}`}>
+        {article.thumb === "image" && <img src={article.hero} alt="" />}
+        {article.thumb === "card" && <CreditCardIcon />}
+        {article.thumb === "news" && <MuralNewspaper variant="card" />}
       </span>
 
       <span className="card-body">
@@ -324,12 +409,12 @@ function ArticleDetail({ article }) {
   return (
     <>
       {article.hero && (
-        <div className="detail-hero">
-          <img src={article.hero} alt="" />
+        <div className={`detail-hero ${article.htmlBody ? "full-cover" : ""}`}>
+          <img src={article.hero} alt={article.coverName || ""} />
         </div>
       )}
 
-      {article.heroKind === "newspaper" && (
+      {article.heroKind === "newspaper" && !article.hero && (
         <div className="detail-newspaper-hero" aria-hidden="true">
           <MuralNewspaper variant="hero" />
         </div>

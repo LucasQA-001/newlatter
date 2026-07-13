@@ -525,24 +525,78 @@ button {
   text-align: right;
 }
 
+.html-editor input,
+.html-editor select,
 .html-editor textarea {
   width: 100%;
-  min-height: 180px;
-  resize: vertical;
   border: 1px solid var(--rsv-line);
   border-radius: 10px;
-  padding: 12px;
+  padding: 10px 12px;
   background: #fbfdfc;
   color: var(--rsv-ink);
-  font-family: Consolas, "Courier New", monospace;
-  font-size: 12.5px;
-  line-height: 1.5;
+  font: inherit;
   outline: none;
 }
 
+.html-editor input:focus,
+.html-editor select:focus,
 .html-editor textarea:focus {
   border-color: var(--rsv-pine-light);
   box-shadow: 0 0 0 3px rgba(53, 122, 95, 0.14);
+}
+
+.html-input {
+  min-height: 170px;
+  resize: vertical;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+.summary-input {
+  min-height: 70px;
+  resize: vertical;
+}
+
+.editor-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.field-block,
+.editor-grid label,
+.cover-upload {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 12px;
+  color: var(--rsv-forest);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.cover-upload {
+  position: relative;
+  min-height: 58px;
+  padding: 10px 12px;
+  border: 1px dashed var(--rsv-pine-light);
+  border-radius: 10px;
+  background: #f9fcfa;
+  cursor: pointer;
+}
+
+.cover-upload strong {
+  color: var(--rsv-ink-soft);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.cover-upload input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
 }
 
 .editor-actions {
@@ -625,6 +679,49 @@ button {
 .html-preview .html-message {
   padding: 16px;
   overflow: auto;
+}
+
+.insert-preview {
+  padding: 16px;
+  overflow: auto;
+}
+
+.insert-card-preview {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  margin-bottom: 16px;
+  padding: 18px;
+  border: 1px solid var(--rsv-pine-light);
+  border-radius: 16px;
+  background: #fff;
+}
+
+.image-preview-thumb,
+.image-thumb {
+  overflow: hidden;
+  background: #eaf3ee;
+}
+
+.image-preview-thumb img,
+.image-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.insert-hero-preview {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 7;
+  object-fit: cover;
+  margin-bottom: 16px;
+  border-radius: 10px;
+  border: 1px solid var(--rsv-line);
+}
+
+.insert-preview .html-message {
+  padding: 0;
 }
 
 .overlay {
@@ -886,6 +983,16 @@ button {
 .detail-hero img {
   width: 100%;
   display: block;
+}
+
+.detail-hero.full-cover {
+  height: 232px;
+  background: #dfe9e4;
+}
+
+.detail-hero.full-cover img {
+  height: 100%;
+  object-fit: cover;
 }
 
 .detail-newspaper-hero {
@@ -1234,6 +1341,10 @@ button {
   }
 
   .html-editor {
+    grid-template-columns: 1fr;
+  }
+
+  .editor-grid {
     grid-template-columns: 1fr;
   }
 
