@@ -483,6 +483,127 @@ button {
   flex: none;
 }
 
+.html-editor {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.85fr);
+  gap: 18px;
+  margin-top: 24px;
+  align-items: stretch;
+}
+
+.html-editor-input,
+.html-preview {
+  min-width: 0;
+  border: 1px solid var(--rsv-line);
+  border-radius: 14px;
+  background: var(--rsv-paper);
+  box-shadow: var(--shadow-sm);
+}
+
+.html-editor-input {
+  padding: 18px;
+}
+
+.section-title {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+.section-title h2 {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  color: var(--rsv-forest);
+}
+
+.section-title span {
+  color: var(--rsv-ink-soft);
+  font-size: 12px;
+  text-align: right;
+}
+
+.html-editor textarea {
+  width: 100%;
+  min-height: 180px;
+  resize: vertical;
+  border: 1px solid var(--rsv-line);
+  border-radius: 10px;
+  padding: 12px;
+  background: #fbfdfc;
+  color: var(--rsv-ink);
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 12.5px;
+  line-height: 1.5;
+  outline: none;
+}
+
+.html-editor textarea:focus {
+  border-color: var(--rsv-pine-light);
+  box-shadow: 0 0 0 3px rgba(53, 122, 95, 0.14);
+}
+
+.editor-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.primary-action,
+.secondary-action {
+  min-height: 38px;
+  border-radius: 9px;
+  padding: 0 14px;
+  border: 1px solid transparent;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.primary-action {
+  color: #fff;
+  background: var(--rsv-pine);
+}
+
+.primary-action:hover {
+  background: var(--rsv-forest);
+}
+
+.secondary-action {
+  color: var(--rsv-forest);
+  background: var(--rsv-mint);
+  border-color: var(--rsv-line);
+}
+
+.secondary-action:hover {
+  border-color: var(--rsv-pine-light);
+}
+
+.html-preview {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.preview-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 15px;
+  background: linear-gradient(120deg, var(--rsv-forest), var(--rsv-pine));
+  color: #fff;
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.html-preview .html-message {
+  padding: 16px;
+  overflow: auto;
+}
+
 .overlay {
   position: absolute;
   inset: 0;
@@ -918,6 +1039,56 @@ button {
   color: var(--rsv-ink);
 }
 
+.html-message {
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--rsv-ink);
+}
+
+.html-message h1,
+.html-message h2,
+.html-message h3 {
+  margin: 0 0 10px;
+  font-family: "Poppins", sans-serif;
+  color: var(--rsv-forest);
+  line-height: 1.25;
+}
+
+.html-message h1 {
+  font-size: 20px;
+}
+
+.html-message h2 {
+  font-size: 17px;
+}
+
+.html-message h3 {
+  font-size: 15px;
+}
+
+.html-message p {
+  margin: 0 0 12px;
+}
+
+.html-message ul,
+.html-message ol {
+  margin: 0 0 14px;
+  padding-left: 20px;
+}
+
+.html-message li {
+  margin-bottom: 6px;
+}
+
+.html-message a {
+  color: var(--rsv-pine);
+  font-weight: 700;
+}
+
+.html-message .callout {
+  margin-top: 8px;
+}
+
 .steps-title {
   margin: 18px 0 10px;
   font-family: "Poppins", sans-serif;
@@ -1015,6 +1186,20 @@ button {
 
   .welcome {
     padding: 22px 20px;
+  }
+
+  .html-editor {
+    grid-template-columns: 1fr;
+  }
+
+  .section-title {
+    display: block;
+  }
+
+  .section-title span {
+    display: block;
+    margin-top: 4px;
+    text-align: left;
   }
 
   .panel {

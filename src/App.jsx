@@ -66,14 +66,30 @@ const ARTICLES = {
 };
 
 const ARTICLE_ORDER = ["cni", "welcome"];
+const DEFAULT_HTML_MESSAGE = `<h2>Nova mensagem do Reserve</h2>
+<p>Escreva aqui o conteúdo que vai aparecer no mural.</p>
+<ul>
+  <li><strong>Destaque:</strong> use HTML para formatar a mensagem.</li>
+  <li>Listas, links e blocos simples são aceitos.</li>
+</ul>
+<div class="callout">Mensagem criada pelo editor HTML.</div>`;
 
 export default function App() {
   const [panelOpen, setPanelOpen] = useState(false);
   const [hasUnread, setHasUnread] = useState(true);
   const [selectedArticleId, setSelectedArticleId] = useState(null);
+  const [htmlInput, setHtmlInput] = useState(DEFAULT_HTML_MESSAGE);
+  const [customArticles, setCustomArticles] = useState([]);
   const detailRef = useRef(null);
 
-  const selectedArticle = selectedArticleId ? ARTICLES[selectedArticleId] : null;
+  const htmlPreview = sanitizeHtml(htmlInput);
+  const articleList = [
+    ...customArticles,
+    ...ARTICLE_ORDER.map((articleId) => ARTICLES[articleId]),
+  ];
+  const selectedArticle = selectedArticleId
+    ? articleList.find((article) => article.id === selectedArticleId)
+    : null;
 
   useEffect(() => {
     detailRef.current?.scrollTo({ top: 0 });
@@ -91,6 +107,33 @@ export default function App() {
 
   function backToList() {
     setSelectedArticleId(null);
+  }
+
+  function addHtmlArticle() {
+    const htmlBody = sanitizeHtml(htmlInput);
+
+    if (!htmlBody.trim()) {
+      return;
+    }
+
+    const title = extractHtmlTitle(htmlBody) || "Mensagem criada por HTML";
+    const article = {
+      id: `html-${Date.now()}`,
+      tag: "HTML",
+      title,
+      listTitle: title,
+      summary: extractPlainText(htmlBody) || "Conteúdo personalizado inserido por HTML.",
+      date: formatDate(new Date()),
+      htmlBody,
+      unread: true,
+      thumb: "news",
+      heroKind: "newspaper",
+    };
+
+    setCustomArticles((articles) => [article, ...articles]);
+    setSelectedArticleId(article.id);
+    setHasUnread(true);
+    setPanelOpen(true);
   }
 
   return (
@@ -149,6 +192,37 @@ export default function App() {
           <InfoIcon />
           Clique no ícone de jornal no topo da tela para ver as novidades do Reserve.
         </div>
+
+        <section className="html-editor" aria-label="Editor HTML da mensagem">
+          <div className="html-editor-input">
+            <div className="section-title">
+              <h2>Mensagem por HTML</h2>
+              <span>Preview do conteúdo antes de publicar no mural</span>
+            </div>
+            <textarea
+              value={htmlInput}
+              onChange={(event) => setHtmlInput(event.target.value)}
+              spellCheck="false"
+              aria-label="HTML da mensagem"
+            />
+            <div className="editor-actions">
+              <button type="button" className="primary-action" onClick={addHtmlArticle}>
+                Adicionar ao mural
+              </button>
+              <button type="button" className="secondary-action" onClick={openPanel}>
+                Abrir mural
+              </button>
+            </div>
+          </div>
+
+          <div className="html-preview">
+            <div className="preview-header">
+              <MuralNewspaper variant="panel" />
+              <span>Prévia</span>
+            </div>
+            <div className="html-message" dangerouslySetInnerHTML={{ __html: htmlPreview }} />
+          </div>
+        </section>
       </main>
 
       <button
@@ -183,11 +257,11 @@ export default function App() {
 
         <div className={`panel-body ${selectedArticle ? "show-detail" : ""}`}>
           <div className="view list-view">
-            {ARTICLE_ORDER.map((articleId) => (
+            {articleList.map((article) => (
               <NewsCard
-                article={ARTICLES[articleId]}
-                key={articleId}
-                onSelect={() => setSelectedArticleId(articleId)}
+                article={article}
+                key={article.id}
+                onSelect={() => setSelectedArticleId(article.id)}
               />
             ))}
           </div>
@@ -240,9 +314,13 @@ function ArticleDetail({ article }) {
         <h2>{article.title}</h2>
         <span className="detail-date">{article.date}</span>
 
-        {article.paragraphs.map((paragraph, index) => (
+        {article.paragraphs?.map((paragraph, index) => (
           <p key={`paragraph-${index}`}>{paragraph}</p>
         ))}
+
+        {article.htmlBody && (
+          <div className="html-message" dangerouslySetInnerHTML={{ __html: article.htmlBody }} />
+        )}
 
         {article.steps?.length > 0 && (
           <>
@@ -328,4 +406,59 @@ function InfoIcon() {
       <circle cx="12" cy="12" r="9" />
     </svg>
   );
+}
+
+function sanitizeHtml(html) {
+  if (typeof window === "undefined" || !html) {
+    return "";
+  }
+
+  const template = document.createElement("template");
+  template.innerHTML = html;
+  const blockedTags = new Set(["script", "iframe", "object", "embed", "link", "meta", "style"]);
+  const allowedAttributes = new Set(["href", "target", "rel", "class", "title"]);
+
+  template.content.querySelectorAll("*").forEach((node) => {
+    if (blockedTags.has(node.tagName.toLowerCase())) {
+      node.remove();
+      return;
+    }
+
+    [...node.attributes].forEach((attribute) => {
+      const name = attribute.name.toLowerCase();
+      const value = attribute.value.trim().toLowerCase();
+
+      if (name.startsWith("on") || !allowedAttributes.has(name) || value.startsWith("javascript:")) {
+        node.removeAttribute(attribute.name);
+      }
+    });
+
+    if (node.tagName.toLowerCase() === "a") {
+      node.setAttribute("target", "_blank");
+      node.setAttribute("rel", "noreferrer");
+    }
+  });
+
+  return template.innerHTML;
+}
+
+function extractHtmlTitle(html) {
+  const template = document.createElement("template");
+  template.innerHTML = html;
+  return template.content.querySelector("h1, h2, h3")?.textContent?.trim();
+}
+
+function extractPlainText(html) {
+  const template = document.createElement("template");
+  template.innerHTML = html;
+  const text = template.content.textContent?.replace(/\s+/g, " ").trim() || "";
+  return text.length > 95 ? `${text.slice(0, 92)}...` : text;
+}
+
+function formatDate(date) {
+  return new Intl.DateTimeFormat("pt-BR", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  }).format(date);
 }
