@@ -553,7 +553,11 @@ button {
 }
 
 .primary-action,
-.secondary-action {
+.secondary-action,
+.image-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   min-height: 38px;
   border-radius: 9px;
   padding: 0 14px;
@@ -579,6 +583,25 @@ button {
 
 .secondary-action:hover {
   border-color: var(--rsv-pine-light);
+}
+
+.image-action {
+  position: relative;
+  overflow: hidden;
+  color: var(--rsv-forest);
+  background: #f9fcfa;
+  border-color: var(--rsv-line);
+}
+
+.image-action:hover {
+  border-color: var(--rsv-pine-light);
+}
+
+.image-action input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
 }
 
 .html-preview {
@@ -1087,6 +1110,28 @@ button {
 
 .html-message .callout {
   margin-top: 8px;
+}
+
+.html-message figure {
+  margin: 14px 0;
+}
+
+.html-message img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  border: 1px solid var(--rsv-line);
+  box-shadow: var(--shadow-sm);
+}
+
+.html-message figcaption {
+  margin-top: 6px;
+  color: #7e9188;
+  font-size: 11px;
+  text-align: center;
+  font-style: italic;
 }
 
 .steps-title {

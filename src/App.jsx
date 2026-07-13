@@ -136,6 +136,28 @@ export default function App() {
     setPanelOpen(true);
   }
 
+  function handleImageUpload(event) {
+    const file = event.target.files?.[0];
+
+    if (!file || !file.type.startsWith("image/")) {
+      return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      const imageHtml = `<figure>
+  <img src="${reader.result}" alt="${escapeHtmlAttribute(file.name)}">
+  <figcaption>${escapeHtml(file.name)}</figcaption>
+</figure>`;
+
+      setHtmlInput((currentHtml) => `${currentHtml.trim()}\n\n${imageHtml}`);
+      event.target.value = "";
+    };
+
+    reader.readAsDataURL(file);
+  }
+
   return (
     <div className="stage">
       <header className="topbar">
@@ -206,6 +228,10 @@ export default function App() {
               aria-label="HTML da mensagem"
             />
             <div className="editor-actions">
+              <label className="image-action">
+                Adicionar imagem
+                <input type="file" accept="image/*" onChange={handleImageUpload} />
+              </label>
               <button type="button" className="primary-action" onClick={addHtmlArticle}>
                 Adicionar ao mural
               </button>
@@ -416,7 +442,7 @@ function sanitizeHtml(html) {
   const template = document.createElement("template");
   template.innerHTML = html;
   const blockedTags = new Set(["script", "iframe", "object", "embed", "link", "meta", "style"]);
-  const allowedAttributes = new Set(["href", "target", "rel", "class", "title"]);
+  const allowedAttributes = new Set(["href", "target", "rel", "class", "title", "src", "alt", "width", "height", "loading"]);
 
   template.content.querySelectorAll("*").forEach((node) => {
     if (blockedTags.has(node.tagName.toLowerCase())) {
@@ -431,15 +457,38 @@ function sanitizeHtml(html) {
       if (name.startsWith("on") || !allowedAttributes.has(name) || value.startsWith("javascript:")) {
         node.removeAttribute(attribute.name);
       }
+
+      if (name === "src" && !isSafeImageSource(attribute.value)) {
+        node.removeAttribute(attribute.name);
+      }
     });
 
     if (node.tagName.toLowerCase() === "a") {
       node.setAttribute("target", "_blank");
       node.setAttribute("rel", "noreferrer");
     }
+
+    if (node.tagName.toLowerCase() === "img") {
+      node.setAttribute("loading", "lazy");
+    }
   });
 
   return template.innerHTML;
+}
+
+function isSafeImageSource(value) {
+  const source = value.trim().toLowerCase();
+  return source.startsWith("https://") || source.startsWith("http://") || source.startsWith("data:image/");
+}
+
+function escapeHtml(value) {
+  const span = document.createElement("span");
+  span.textContent = value;
+  return span.innerHTML;
+}
+
+function escapeHtmlAttribute(value) {
+  return escapeHtml(value).replaceAll('"', "&quot;");
 }
 
 function extractHtmlTitle(html) {
