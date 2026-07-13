@@ -773,33 +773,29 @@ button {
 }
 
 .newspaper-page {
-  fill: #2aa8dd;
-  stroke: #b9f1ff;
+  fill: #2c916d;
+  stroke: #c9f6df;
   stroke-width: 4;
 }
 
 .newspaper-edge {
-  fill: #0f6da4;
+  fill: #176047;
   opacity: 0.95;
 }
 
 .newspaper-icon .newspaper-fold {
-  fill: #78d8ff;
-  stroke: #d9fbff;
+  fill: #75d6a6;
+  stroke: #e5fff0;
   stroke-width: 2;
 }
 
 .newspaper-main-block {
-  fill: #f0fbff;
+  fill: #eafff2;
   opacity: 0.95;
 }
 
-.newspaper-ribbon {
-  fill: #2aa8dd;
-}
-
 .newspaper-line {
-  stroke: #e5fbff;
+  stroke: #eafff2;
   stroke-width: 5;
   stroke-linecap: round;
 }
@@ -809,35 +805,24 @@ button {
 }
 
 .newspaper-alert {
-  stroke: #e5fbff;
+  stroke: #eafff2;
   stroke-width: 7;
   stroke-linecap: round;
 }
 
 .newspaper-alert-dot {
-  stroke: #e5fbff;
+  stroke: #eafff2;
   stroke-width: 8;
   stroke-linecap: round;
 }
 
-.newspaper-neural {
-  stroke: #e5fbff;
-  stroke-width: 2.4;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  opacity: 0.95;
-}
-
-.newspaper-neural circle {
-  fill: #145b83;
-  stroke: #e5fbff;
-}
-
 .newspaper-r-mark {
-  fill: #145b83;
+  fill: #153a2c;
   font-family: "Poppins", sans-serif;
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 800;
+  text-anchor: middle;
+  dominant-baseline: middle;
 }
 
 .mural-newspaper-trigger {
@@ -882,15 +867,15 @@ button {
 
 .thumb.newspaper-thumb {
   background:
-    radial-gradient(circle at 28% 20%, rgba(185, 241, 255, 0.28), transparent 32%),
-    linear-gradient(150deg, #1f5874, #102f42);
-  border: 1px solid rgba(185, 241, 255, 0.45);
+    radial-gradient(circle at 28% 20%, rgba(201, 246, 223, 0.28), transparent 32%),
+    linear-gradient(150deg, #1f6b52, #153a2c);
+  border: 1px solid rgba(201, 246, 223, 0.5);
 }
 
 .detail-newspaper-hero {
   background:
-    radial-gradient(circle at 24% 22%, rgba(42, 168, 221, 0.32), transparent 26%),
-    linear-gradient(135deg, #102f42, #153a2c);
+    radial-gradient(circle at 24% 22%, rgba(117, 214, 166, 0.32), transparent 26%),
+    linear-gradient(135deg, #153a2c, #255c46);
 }
 
 .detail-pad {

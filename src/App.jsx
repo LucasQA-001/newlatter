@@ -273,22 +273,13 @@ function MuralNewspaper({ variant = "default" }) {
         <path className="newspaper-page" d="M16 18 67 5c5-1 10 2 11 7l12 48c1 5-2 10-7 11L32 84c-5 1-10-2-11-7L9 29c-1-5 2-10 7-11Z" />
         <path className="newspaper-edge" d="m74 18 6 25 5-1-6-25c-1-5-5-8-10-7l-4 1c4 0 8 3 9 7Z" />
         <path className="newspaper-fold" d="m70 6 8 32 8-2-6-24c-1-5-5-8-10-6Z" />
-        <rect className="newspaper-main-block" x="26" y="19" width="34" height="20" rx="2" transform="rotate(-14 26 19)" />
-        <path className="newspaper-ribbon" d="m38 19 12-3 3 11-5-2-4 4-3-11Z" />
+        <rect className="newspaper-main-block" x="24" y="17" width="38" height="23" rx="3" transform="rotate(-14 24 17)" />
+        <text className="newspaper-r-mark" x="42" y="34" transform="rotate(-14 42 34)">R</text>
         <path className="newspaper-line thick" d="m23 47 44-11" />
         <path className="newspaper-line" d="m25 56 36-9" />
         <path className="newspaper-line" d="m27 65 29-7" />
         <path className="newspaper-alert" d="m68 45 5 19" />
         <path className="newspaper-alert-dot" d="m75 70 .01 0" />
-        <g className="newspaper-neural">
-          <path d="M24 28 18 33l3 7 8 1 6-5-3-7-8-1Z" />
-          <path d="m18 33-6-4M21 40l-4 6M35 36l6 3M32 29l4-5" />
-          <circle cx="12" cy="29" r="2" />
-          <circle cx="17" cy="46" r="2" />
-          <circle cx="41" cy="39" r="2" />
-          <circle cx="36" cy="24" r="2" />
-        </g>
-        <text className="newspaper-r-mark" x="61" y="29" transform="rotate(-14 61 29)">R</text>
       </svg>
     </span>
   );
