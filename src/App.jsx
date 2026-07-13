@@ -269,17 +269,19 @@ function MuralNewspaper({ variant = "default" }) {
   return (
     <span className={`mural-newspaper mural-newspaper-${variant}`} aria-hidden="true">
       <svg className="newspaper-icon" viewBox="0 0 96 96" fill="none">
-        <path className="newspaper-shadow" d="M18 25 69 12c5-1 10 2 11 7l12 48c1 5-2 10-7 11L34 91c-5 1-10-2-11-7L11 36c-1-5 2-10 7-11Z" />
-        <path className="newspaper-page" d="M16 18 67 5c5-1 10 2 11 7l12 48c1 5-2 10-7 11L32 84c-5 1-10-2-11-7L9 29c-1-5 2-10 7-11Z" />
-        <path className="newspaper-edge" d="m74 18 6 25 5-1-6-25c-1-5-5-8-10-7l-4 1c4 0 8 3 9 7Z" />
-        <path className="newspaper-fold" d="m70 6 8 32 8-2-6-24c-1-5-5-8-10-6Z" />
-        <rect className="newspaper-main-block" x="24" y="17" width="38" height="23" rx="3" transform="rotate(-14 24 17)" />
-        <text className="newspaper-r-mark" x="42" y="34" transform="rotate(-14 42 34)">R</text>
-        <path className="newspaper-line thick" d="m23 47 44-11" />
-        <path className="newspaper-line" d="m25 56 36-9" />
-        <path className="newspaper-line" d="m27 65 29-7" />
-        <path className="newspaper-alert" d="m68 45 5 19" />
-        <path className="newspaper-alert-dot" d="m75 70 .01 0" />
+        <g className="newspaper-tilt">
+          <rect className="newspaper-shadow" x="25" y="16" width="55" height="68" rx="8" />
+          <rect className="newspaper-page" x="17" y="10" width="55" height="68" rx="8" />
+          <path className="newspaper-edge" d="M66 11h6c4 0 8 4 8 8v52c0 4-4 8-8 8h-6c4 0 8-4 8-8V19c0-4-4-8-8-8Z" />
+          <path className="newspaper-fold" d="M58 12h9c4 0 7 3 7 7v18H58V12Z" />
+          <rect className="newspaper-main-block" x="26" y="20" width="29" height="20" rx="2.5" />
+          <text className="newspaper-r-mark" x="40.5" y="31.8">R</text>
+          <path className="newspaper-line thick" d="M27 49h34" />
+          <path className="newspaper-line" d="M27 58h30" />
+          <path className="newspaper-line" d="M27 67h24" />
+          <path className="newspaper-alert" d="M62 48v17" />
+          <path className="newspaper-alert-dot" d="M62 71h.01" />
+        </g>
       </svg>
     </span>
   );

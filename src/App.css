@@ -762,6 +762,11 @@ button {
   filter: drop-shadow(0 10px 10px rgba(4, 20, 30, 0.32));
 }
 
+.newspaper-tilt {
+  transform: rotate(12deg);
+  transform-origin: 48px 48px;
+}
+
 .news-trigger .newspaper-icon,
 .thumb .newspaper-icon {
   stroke: none;
@@ -775,7 +780,7 @@ button {
 .newspaper-page {
   fill: #2c916d;
   stroke: #c9f6df;
-  stroke-width: 4;
+  stroke-width: 4.2;
 }
 
 .newspaper-edge {
@@ -786,7 +791,7 @@ button {
 .newspaper-icon .newspaper-fold {
   fill: #75d6a6;
   stroke: #e5fff0;
-  stroke-width: 2;
+  stroke-width: 2.2;
 }
 
 .newspaper-main-block {
@@ -819,7 +824,7 @@ button {
 .newspaper-r-mark {
   fill: #153a2c;
   font-family: "Poppins", sans-serif;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 800;
   text-anchor: middle;
   dominant-baseline: middle;
@@ -828,25 +833,21 @@ button {
 .mural-newspaper-trigger {
   width: 28px;
   height: 28px;
-  transform: rotate(-7deg);
 }
 
 .mural-newspaper-panel {
   width: 34px;
   height: 34px;
-  transform: rotate(-7deg);
 }
 
 .mural-newspaper-card {
   width: 46px;
   height: 46px;
-  transform: rotate(-7deg);
 }
 
 .mural-newspaper-hero {
   width: min(230px, 70vw);
   height: min(230px, 70vw);
-  transform: rotate(-7deg);
 }
 
 .mural-newspaper-hero .newspaper-page {
