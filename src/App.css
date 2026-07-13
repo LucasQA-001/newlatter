@@ -755,6 +755,144 @@ button {
     linear-gradient(135deg, var(--rsv-forest), var(--rsv-pine));
 }
 
+.newspaper-icon {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 10px 10px rgba(4, 20, 30, 0.32));
+}
+
+.news-trigger .newspaper-icon,
+.thumb .newspaper-icon {
+  stroke: none;
+}
+
+.newspaper-shadow {
+  fill: #112738;
+  opacity: 0.35;
+}
+
+.newspaper-page {
+  fill: #2aa8dd;
+  stroke: #b9f1ff;
+  stroke-width: 4;
+}
+
+.newspaper-edge {
+  fill: #0f6da4;
+  opacity: 0.95;
+}
+
+.newspaper-icon .newspaper-fold {
+  fill: #78d8ff;
+  stroke: #d9fbff;
+  stroke-width: 2;
+}
+
+.newspaper-main-block {
+  fill: #f0fbff;
+  opacity: 0.95;
+}
+
+.newspaper-ribbon {
+  fill: #2aa8dd;
+}
+
+.newspaper-line {
+  stroke: #e5fbff;
+  stroke-width: 5;
+  stroke-linecap: round;
+}
+
+.newspaper-line.thick {
+  stroke-width: 6;
+}
+
+.newspaper-alert {
+  stroke: #e5fbff;
+  stroke-width: 7;
+  stroke-linecap: round;
+}
+
+.newspaper-alert-dot {
+  stroke: #e5fbff;
+  stroke-width: 8;
+  stroke-linecap: round;
+}
+
+.newspaper-neural {
+  stroke: #e5fbff;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.95;
+}
+
+.newspaper-neural circle {
+  fill: #145b83;
+  stroke: #e5fbff;
+}
+
+.newspaper-r-mark {
+  fill: #145b83;
+  font-family: "Poppins", sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.mural-newspaper-trigger {
+  width: 28px;
+  height: 28px;
+  transform: rotate(-7deg);
+}
+
+.mural-newspaper-panel {
+  width: 34px;
+  height: 34px;
+  transform: rotate(-7deg);
+}
+
+.mural-newspaper-card {
+  width: 46px;
+  height: 46px;
+  transform: rotate(-7deg);
+}
+
+.mural-newspaper-hero {
+  width: min(230px, 70vw);
+  height: min(230px, 70vw);
+  transform: rotate(-7deg);
+}
+
+.mural-newspaper-hero .newspaper-page {
+  stroke-width: 3.2;
+}
+
+.mural-newspaper-hero .newspaper-line {
+  stroke-width: 4.5;
+}
+
+.mural-newspaper-hero .newspaper-line.thick {
+  stroke-width: 5.6;
+}
+
+.mural-newspaper-hero .newspaper-alert {
+  stroke-width: 6.4;
+}
+
+.thumb.newspaper-thumb {
+  background:
+    radial-gradient(circle at 28% 20%, rgba(185, 241, 255, 0.28), transparent 32%),
+    linear-gradient(150deg, #1f5874, #102f42);
+  border: 1px solid rgba(185, 241, 255, 0.45);
+}
+
+.detail-newspaper-hero {
+  background:
+    radial-gradient(circle at 24% 22%, rgba(42, 168, 221, 0.32), transparent 26%),
+    linear-gradient(135deg, #102f42, #153a2c);
+}
+
 .detail-pad {
   padding: 18px 18px 26px;
 }
