@@ -146,6 +146,211 @@ button {
   stroke: var(--rsv-forest);
 }
 
+.mural-newspaper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+
+.newspaper-sheet {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  width: 100%;
+  height: 100%;
+  padding: 8px 7px 7px;
+  overflow: hidden;
+  border: 1px solid rgba(21, 58, 44, 0.22);
+  border-radius: 4px 8px 4px 4px;
+  background:
+    linear-gradient(135deg, transparent 0 13px, rgba(220, 230, 225, 0.9) 13px 15px, transparent 15px),
+    linear-gradient(180deg, #ffffff 0%, #eef6f1 100%);
+  box-shadow:
+    0 8px 16px rgba(10, 30, 22, 0.18),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+}
+
+.newspaper-fold {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 16px;
+  height: 16px;
+  border-left: 1px solid rgba(21, 58, 44, 0.2);
+  border-bottom: 1px solid rgba(21, 58, 44, 0.18);
+  border-radius: 0 7px 0 2px;
+  background: linear-gradient(135deg, #dceee3, #ffffff 62%);
+}
+
+.newspaper-brand {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  min-height: 22px;
+}
+
+.newspaper-brand svg {
+  width: 23px;
+  height: 23px;
+  stroke: var(--rsv-pine);
+  stroke-width: 2.2;
+}
+
+.newspaper-brand circle {
+  fill: var(--rsv-mint);
+}
+
+.newspaper-r {
+  font-family: "Poppins", sans-serif;
+  font-size: 26px;
+  line-height: 0.8;
+  font-weight: 800;
+  color: var(--rsv-forest);
+  letter-spacing: 0;
+}
+
+.newspaper-title {
+  font-family: "Poppins", sans-serif;
+  font-size: 6px;
+  line-height: 1;
+  font-weight: 700;
+  color: var(--rsv-pine);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.newspaper-rule,
+.newspaper-lines span {
+  display: block;
+  height: 2px;
+  border-radius: 20px;
+  background: rgba(21, 58, 44, 0.22);
+}
+
+.newspaper-lines {
+  display: grid;
+  gap: 3px;
+}
+
+.newspaper-lines span:nth-child(2) {
+  width: 78%;
+}
+
+.newspaper-lines span:nth-child(3) {
+  width: 55%;
+}
+
+.mural-newspaper-trigger {
+  width: 27px;
+  height: 32px;
+  transform: rotate(-5deg);
+}
+
+.mural-newspaper-trigger .newspaper-sheet {
+  padding: 5px 4px 4px;
+  border-radius: 3px 6px 3px 3px;
+}
+
+.mural-newspaper-trigger .newspaper-brand svg {
+  width: 12px;
+  height: 12px;
+}
+
+.mural-newspaper-trigger .newspaper-r {
+  font-size: 16px;
+}
+
+.mural-newspaper-trigger .newspaper-title {
+  display: none;
+}
+
+.mural-newspaper-trigger .newspaper-rule,
+.mural-newspaper-trigger .newspaper-lines span {
+  height: 1.5px;
+}
+
+.mural-newspaper-panel {
+  width: 34px;
+  height: 40px;
+  transform: rotate(-4deg);
+}
+
+.mural-newspaper-panel .newspaper-sheet {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.22);
+}
+
+.mural-newspaper-card {
+  width: 42px;
+  height: 46px;
+  transform: rotate(-5deg);
+}
+
+.mural-newspaper-card .newspaper-r {
+  font-size: 22px;
+}
+
+.mural-newspaper-card .newspaper-brand svg {
+  width: 18px;
+  height: 18px;
+}
+
+.mural-newspaper-card .newspaper-title {
+  font-size: 5.5px;
+}
+
+.mural-newspaper-hero {
+  width: min(260px, 76vw);
+  height: 174px;
+  transform: rotate(-3deg);
+}
+
+.mural-newspaper-hero .newspaper-sheet {
+  padding: 22px 20px 18px;
+  border-radius: 8px 18px 8px 8px;
+  border-color: rgba(21, 58, 44, 0.28);
+}
+
+.mural-newspaper-hero .newspaper-fold {
+  width: 42px;
+  height: 42px;
+}
+
+.mural-newspaper-hero .newspaper-brand {
+  gap: 8px;
+  min-height: 62px;
+}
+
+.mural-newspaper-hero .newspaper-brand svg {
+  width: 58px;
+  height: 58px;
+  stroke-width: 1.9;
+}
+
+.mural-newspaper-hero .newspaper-r {
+  font-size: 76px;
+}
+
+.mural-newspaper-hero .newspaper-title {
+  margin-top: 6px;
+  font-size: 17px;
+  letter-spacing: 0;
+}
+
+.mural-newspaper-hero .newspaper-rule {
+  height: 4px;
+  margin: 5px 0;
+}
+
+.mural-newspaper-hero .newspaper-lines {
+  gap: 6px;
+}
+
+.mural-newspaper-hero .newspaper-lines span {
+  height: 4px;
+}
+
 .news-dot {
   position: absolute;
   top: -4px;
@@ -457,10 +662,18 @@ button {
   background: linear-gradient(150deg, #3e8067, #255c46);
 }
 
+.thumb.newspaper-thumb {
+  background: linear-gradient(150deg, #f9fffb, #dceee3);
+}
+
 .thumb svg {
   width: 26px;
   height: 26px;
   stroke: #fff;
+}
+
+.thumb.newspaper-thumb svg {
+  stroke: var(--rsv-pine);
 }
 
 .card-body {
@@ -529,6 +742,17 @@ button {
 .detail-hero img {
   width: 100%;
   display: block;
+}
+
+.detail-newspaper-hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 230px;
+  padding: 24px 18px 30px;
+  background:
+    radial-gradient(circle at 24% 24%, rgba(217, 164, 65, 0.22), transparent 28%),
+    linear-gradient(135deg, var(--rsv-forest), var(--rsv-pine));
 }
 
 .detail-pad {

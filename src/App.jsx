@@ -61,6 +61,7 @@ const ARTICLES = {
     callout: "📌 Itens não lidos aparecem com uma marcação dourada na lista. Fique de olho!",
     unread: false,
     thumb: "news",
+    heroKind: "newspaper",
   },
 };
 
@@ -111,7 +112,7 @@ export default function App() {
           <span className="top-link">Status Online</span>
 
           <button className="news-trigger" type="button" aria-label="Abrir mural de novidades" onClick={openPanel}>
-            <NewsIcon />
+            <MuralNewspaper variant="trigger" />
             {hasUnread && <span className="news-dot" />}
           </button>
 
@@ -168,6 +169,8 @@ export default function App() {
             <BackIcon />
           </button>
 
+          <MuralNewspaper variant="panel" />
+
           <div className="panel-title">
             Mural de Novidades
             <small>Fique por dentro do que mudou no Reserve</small>
@@ -201,8 +204,8 @@ export default function App() {
 function NewsCard({ article, onSelect }) {
   return (
     <button className="news-card" type="button" onClick={onSelect}>
-      <span className={`thumb ${article.thumb === "news" ? "alt" : ""}`}>
-        {article.thumb === "card" ? <CreditCardIcon /> : <NewsIcon />}
+      <span className={`thumb ${article.thumb === "news" ? "newspaper-thumb" : ""}`}>
+        {article.thumb === "card" ? <CreditCardIcon /> : <MuralNewspaper variant="card" />}
       </span>
 
       <span className="card-body">
@@ -223,6 +226,12 @@ function ArticleDetail({ article }) {
       {article.hero && (
         <div className="detail-hero">
           <img src={article.hero} alt="" />
+        </div>
+      )}
+
+      {article.heroKind === "newspaper" && (
+        <div className="detail-newspaper-hero" aria-hidden="true">
+          <MuralNewspaper variant="hero" />
         </div>
       )}
 
@@ -253,6 +262,42 @@ function ArticleDetail({ article }) {
         {article.caption && <p className="caption">{article.caption}</p>}
       </div>
     </>
+  );
+}
+
+function MuralNewspaper({ variant = "default" }) {
+  return (
+    <span className={`mural-newspaper mural-newspaper-${variant}`} aria-hidden="true">
+      <span className="newspaper-sheet">
+        <span className="newspaper-fold" />
+        <span className="newspaper-brand">
+          <NeuralMapIcon />
+          <span className="newspaper-r">R</span>
+        </span>
+        <span className="newspaper-title">Reserve News</span>
+        <span className="newspaper-rule" />
+        <span className="newspaper-lines">
+          <span />
+          <span />
+          <span />
+        </span>
+      </span>
+    </span>
+  );
+}
+
+function NeuralMapIcon() {
+  return (
+    <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+      <path d="M18 8 9 14v11l9 6 10-6V14L18 8Z" />
+      <path d="M31 5 25 9M36 16l-8-2M34 31l-6-6M23 38l-5-7M10 31l8-11M6 21l12 10" />
+      <circle cx="31" cy="5" r="3" />
+      <circle cx="39" cy="17" r="3" />
+      <circle cx="37" cy="33" r="3" />
+      <circle cx="23" cy="41" r="3" />
+      <circle cx="8" cy="32" r="3" />
+      <circle cx="5" cy="20" r="3" />
+    </svg>
   );
 }
 
